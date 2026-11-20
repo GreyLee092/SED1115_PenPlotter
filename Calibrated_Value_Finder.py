@@ -1,16 +1,16 @@
 #this function searches for the boundry angles to interpolate
 
-import pandas as pd
-from pandas import DataFrame
+#import pandas as pd
+#from pandas import DataFrame
 #math for rounding
 import math
 
 #function for getting shoulder calibration interpolation bounds
 def bound_searcher(inter, file):
     #is the upper bound of interpolated value, rounded to next 10th
-    hi = math.ceil(float(inter)/ 10) * 10
+    hi = math.ceil(float(inter) / 10) * 10
     #lower bound of interpolated value, rounded to previous 10th
-    lo = math.floor(float(inter)/ 10) * 10
+    lo = math.floor(float(inter) / 10) * 10
     #print for debugging
     print(hi, lo)
     #gets shoulder calibration values
