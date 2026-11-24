@@ -30,7 +30,7 @@ adcY = ADC(Pin(26))
 potentiometer_range = 65535 - 160
 #creates integer step value for virtual grid
 #denominator is the number of steps desired
-potentiometer_step = potentiometer_range / 180
+potentiometer_step = potentiometer_range / 250
 
 #variable that controls how similar results are
 alpha = 0.85
@@ -75,8 +75,11 @@ while True:
         #runs inverse kinematics
         print(value_X, value_Y)
         shoulder_mov, elbow_mov = main(value_X, value_Y)
-        servo_S.duty_u16(shoulder_mov)
-        servo_E.duty_u16(elbow_mov)
+        if shoulder_mov and elbow_mov is None:
+            continue
+        elif 10.0 <= shoulder_mov <= 140.0 and 20.0 <= elbow_mov <= 170.0:
+            servo_S.duty_u16(shoulder_mov)
+            servo_E.duty_u16(elbow_mov)
     #saves previous values for next loop
     value_X_previous = value_X
     value_Y_previous = value_Y
