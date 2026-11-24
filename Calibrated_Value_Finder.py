@@ -1,12 +1,10 @@
 #this function searches for the boundry angles to interpolate
-
-#import pandas as pd
-#from pandas import DataFrame
 #math for rounding
 import math
 
 #function for getting shoulder calibration interpolation bounds
 def bound_searcher(inter, file):
+    tuned_values = {}
     #is the upper bound of interpolated value, rounded to next 10th
     hi = math.ceil(float(inter) / 10) * 10
     #lower bound of interpolated value, rounded to previous 10th
@@ -16,19 +14,16 @@ def bound_searcher(inter, file):
     #gets shoulder calibration values
     #creates dataframe from file
     #will change file path before upload
-    df = DataFrame(pd.read_csv(f"{file}"))
-    #copies as to not read again
-    df1 = df.copy()
+    with open(file) as csvfile:
+        reader = csvfile
+        next(reader)
+        for row in reader:
+            line = row.strip().split(',')
+            tuned_values[line[0]] = float(line[1])
     #returns value for the high bound
-    hi_bound = df1.loc[df["angle"] == hi, "difference"]
-    #converts to string without header or index text
-    hi_bound = hi_bound.to_string(index=False, header=False)
-    #copies as to not read again
-    df2 = df.copy()
+    hi_bound = tuned_values.get(str(hi))
     #returns value for the low bound
-    df2 = df2.loc[df["angle"] == lo, "difference"]
-    #converts to string without header or index text
-    lo_bound = df2.to_string(index=False, header=False)
+    lo_bound = tuned_values.get(str(lo))
     #returns elbow bounds and their values
     return hi_bound, hi, lo_bound, lo
 
