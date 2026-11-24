@@ -10,7 +10,7 @@ This project allows a user to draw with a pen affixed to a servo arm in the same
 - 1x Button/Switch
 - 2x MG995 Servos
 - 1x Micro Servo
-- Custom 3D-printed parts for servo mounting
+- Custom 3D-printed parts for arm fixture
   
 ## Installation 
 You can clone this repository by running ``` git clone https://github.com/GreyLee092/SED1115_PenPlotter.git ``` 
