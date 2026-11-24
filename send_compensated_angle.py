@@ -14,6 +14,8 @@ def calculation(x_coor, y_coor):
         return None, None
     else:
         angle_shoulder, angle_elbow = angles((vector/2))
+        #adds orientation of arm relative to horizon
+        angle_shoulder += horizon_angle(y_coor, vector)
         #returns angles in degrees
         return angle_shoulder, angle_elbow
 
@@ -25,6 +27,16 @@ def hypotenuse_length(x, y):
     origin_y = 139.5
     #returns length of vector
     return math.sqrt(math.pow(x - origin_x, 2) + math.pow(y - origin_y, 2))
+
+#function gets angle between arm and horizontal axis
+def horizon_angle(y, hypotenuse):
+    #shoulder root x position
+    origin_x = -50
+    #shoulder root y position
+    origin_y = 139.5
+    #returns length of vector
+    adjacent = math.sqrt(math.pow(0 - origin_x, 2) + math.pow(y - origin_y, 2))
+    return math.degrees(math.acos(adjacent / hypotenuse))
 
 #function to get the inner angles of the armature triangle
 def angles(adjacent):
@@ -66,7 +78,8 @@ def main(x_pos, y_pos):
         top_bound, top_value, bot_bound, bot_value = bound_searcher(elbow_angle,
                                                     "Elbow_Servo_Recalibrated_Values.csv")
         #runs interpolation function for shoulder angle then translates shoulder servo
-        shoulder_motion = translate(servo_interpolation(shoulder_angle, hi_bound, hi_value, lo_bound, lo_value))
+        #adds 60˚ to remain on page (subject to change)
+        shoulder_motion = translate(servo_interpolation(shoulder_angle, hi_bound, hi_value, lo_bound, lo_value)+60)
         #runs interpolation function for elbow angle then translates elbow servo
         elbow_motion = translate(servo_interpolation(elbow_angle, top_bound, top_value, bot_bound, bot_value))
         #shoulder_motion = translate(shoulder_angle)
