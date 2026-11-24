@@ -30,12 +30,10 @@ def hypotenuse_length(x, y):
 
 #function gets angle between arm and horizontal axis
 def horizon_angle(y, hypotenuse):
-    #shoulder root x position
-    origin_x = -50
     #shoulder root y position
     origin_y = 139.5
     #returns length of vector
-    adjacent = math.sqrt(math.pow(0 - origin_x, 2) + math.pow(y - origin_y, 2))
+    adjacent = origin_y - y
     return math.degrees(math.acos(adjacent / hypotenuse))
 
 #function to get the inner angles of the armature triangle
