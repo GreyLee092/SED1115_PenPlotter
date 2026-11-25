@@ -5,6 +5,7 @@ import math
 #function for getting shoulder calibration interpolation bounds
 def bound_searcher(inter, file):
     tuned_values = {}
+    print(inter, type(inter))
     #is the upper bound of interpolated value, rounded to next 10th
     hi = math.ceil(float(inter) / 10) * 10
     #lower bound of interpolated value, rounded to previous 10th
@@ -28,7 +29,7 @@ def bound_searcher(inter, file):
     return hi_bound, hi, lo_bound, lo
 
 
-#for coding / debugging
+"""#for coding / debugging
 #inputs would be from calculations block
 user_input1 = input("Enter angle number for shoulder: ")
 #calls shoulder calibration function
@@ -44,4 +45,4 @@ hi_E, hi_valE, lo_E, lo_valE = bound_searcher(user_input2,
 print(f"Shoulder hi bound:{hi_valS} = {hi_S}", type(hi_S))
 print(f"Shoulder lo bound:{lo_valS} = {lo_S}", type(lo_S))
 print(f"Elbow hi bound:{hi_valE} = {hi_E}", type(hi_E))
-print(f"Elbow lo bound:{lo_valE} = {lo_E}", type(lo_E))
+print(f"Elbow lo bound:{lo_valE} = {lo_E}", type(lo_E))"""

@@ -9,13 +9,15 @@ from Servo_Angle_Translator import translate
 def calculation(x_coor, y_coor):
     #calls function to determine the vector length
     vector = hypotenuse_length(x_coor, y_coor)
+    print(f"length of vector: {vector}")
     #calls function to determine the inner arm angles from the vector
     if vector > 300.0:
         return None, None
     else:
         angle_shoulder, angle_elbow = angles((vector/2))
         #adds orientation of arm relative to horizon
-        angle_shoulder += horizon_angle(y_coor, vector)
+        #angle_shoulder += horizon_angle(y_coor, vector)
+        #print(f"horizon angle = {horizon_angle(y_coor, vector)})")
         #returns angles in degrees
         return angle_shoulder, angle_elbow
 
@@ -55,6 +57,8 @@ def servo_interpolation(angle, b, c, d, e):
     upper_bound_real =  c
     lower_bound_target = d
     lower_bound_real =  e
+    print(f"upper bound target: {upper_bound_target}\n lower bound target: {lower_bound_target}\n"
+          f"upper bound real: {upper_bound_real}\n lower bound real: {lower_bound_real}\n")
     #finds slope
     slope = ((upper_bound_real - lower_bound_real) /
              (upper_bound_target - lower_bound_target))
@@ -67,8 +71,9 @@ def servo_interpolation(angle, b, c, d, e):
 def main(x_pos, y_pos):
     #calls function to calculate servo angles
     shoulder_angle, elbow_angle = calculation(x_pos, y_pos)
+    print(f"shoulder angle: {shoulder_angle}")
+    print(f"elbow angle: {elbow_angle}")
     if shoulder_angle and elbow_angle is not None:
-        print(type(shoulder_angle), type(shoulder_angle))
         #calls function to read csv getting calibration values for the shoulder servo
         hi_bound, hi_value, lo_bound, lo_value = bound_searcher(shoulder_angle,
                                                     "Shoulder_Servo_Recalibrated_Values.csv")
@@ -77,7 +82,7 @@ def main(x_pos, y_pos):
                                                     "Elbow_Servo_Recalibrated_Values.csv")
         #runs interpolation function for shoulder angle then translates shoulder servo
         #adds 60˚ to remain on page (subject to change)
-        shoulder_motion = translate(servo_interpolation(shoulder_angle, hi_bound, hi_value, lo_bound, lo_value)+60)
+        shoulder_motion = translate(servo_interpolation(shoulder_angle, hi_bound, hi_value, lo_bound, lo_value))
         #runs interpolation function for elbow angle then translates elbow servo
         elbow_motion = translate(servo_interpolation(elbow_angle, top_bound, top_value, bot_bound, bot_value))
         #shoulder_motion = translate(shoulder_angle)

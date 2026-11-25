@@ -73,13 +73,13 @@ while True:
     #if X and Y is under their respective bands
     if value_X <= X_lo_band and value_Y <= Y_lo_band:
         #runs inverse kinematics
-        print(value_X, value_Y)
+        print(f"X dial pos={value_X} Y dial pos={value_Y}")
         shoulder_mov, elbow_mov = main(value_X, value_Y)
-        if shoulder_mov and elbow_mov is None:
-            continue
-        elif 10.0 <= shoulder_mov <= 140.0 and 20.0 <= elbow_mov <= 170.0:
-            servo_S.duty_u16(shoulder_mov)
-            servo_E.duty_u16(elbow_mov)
+        #if shoulder_mov and elbow_mov is None:
+            #continue
+        #elif 10.0 <= shoulder_mov <= 140.0 and 20.0 <= elbow_mov <= 170.0:
+        servo_S.duty_u16(shoulder_mov)
+        servo_E.duty_u16(elbow_mov)
     #saves previous values for next loop
     value_X_previous = value_X
     value_Y_previous = value_Y
